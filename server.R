@@ -128,7 +128,20 @@ shinyServer(function(input, output) {
   ) #end render plot
   
   
-  output$claPlot <- renderPlot(plotInput()) # plot graph
+# plot graph
+output$claPlot <- renderPlot({
+  ggsave("plot.pdf", plotInput())
+  plotInput()  
+})
+
+
+# download pdf of graph
+output$downloadPDF <- downloadHandler(
+  filename = function() {"plot.pdf"},
+  content = function(file) {
+    file.copy("plot.pdf", file, overwrite=TRUE)
+  }
+)
   
 }#end function
 ) #end shiny server

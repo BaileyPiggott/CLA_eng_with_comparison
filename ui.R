@@ -24,7 +24,9 @@ shinyUI(fluidPage(
                   "Engineering Math" = 10, 
                   selected = 11 #default to all eng
                 )#end options
-    )#end selectInput
+    ),#end selectInput
+    
+    downloadButton("downloadPDF", "Download PDF")
   ),#end sidebar panel
   
   mainPanel(
