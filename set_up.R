@@ -27,7 +27,7 @@ colnames(fix) <- colnames(cla)
 cla <- rbind(cla, fix)
 
 #all engineering
-all_eng <-  cla  %>% rbind(fix)%>% mutate(plan = "ALL_ENG")
+all_eng <-  cla  %>% rbind(fix)%>% mutate(plan = "Z_ENG") # start with z so all eng is on the right of disicpline
 n_eng_1 <-  sum(with(all_eng, year ==1 & score_total > 1), na.rm = TRUE)  # all eng sample sizes
 n_eng_2 <-  sum(with(all_eng, year ==2 & score_total > 1), na.rm = TRUE)
 n_eng_3 <-  sum(with(all_eng, year ==3 & score_total > 1), na.rm = TRUE)
@@ -84,3 +84,11 @@ first_year_mthe <- semi_join(first_year, mthe, by = "studentid") #first years wi
 mthe <- rbind(mthe, first_year_mthe, fix) %>% arrange(studentid) %>% mutate(plan = "MTHE")
 
 
+# dummy data for 1st, 2nd, 4th year to fix box widths
+dummy <- fix # default to null data if discipline has data for all years
+dummy_1 <- data.frame(NA, 60, NA, NA, NA, 1)
+colnames(dummy_1) <- colnames(fix)
+dummy_2 <- data.frame(NA, 60, NA, NA, NA, 2)
+colnames(dummy_2) <- colnames(fix)
+dummy_4 <- data.frame(NA, 60, NA, NA, NA, 4)
+colnames(dummy_4) <- colnames(fix)
