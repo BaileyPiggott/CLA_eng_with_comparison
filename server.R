@@ -17,10 +17,12 @@ shinyServer(function(input, output) {
     if(input$discipline == 1){
       df = mech
       disc_name = "Mechanical Engineering" # text string for title and legend
+      dummy <- fix
     }
     else if(input$discipline == 2){
       df = elec
       disc_name = "Electrical Engineering"
+      dummy <- fix
     }
     else if(input$discipline == 3){
       df = cmpe
@@ -30,10 +32,12 @@ shinyServer(function(input, output) {
     else if(input$discipline == 4){
       df = civl
       disc_name = "Civil Engineering"
+      dummy <- fix
     }    
     else if(input$discipline == 5){
       df = chem
       disc_name = "Chemical Engineering"
+      dummy <- fix
     } 
     else if(input$discipline == 6){
       df = ench
@@ -48,11 +52,12 @@ shinyServer(function(input, output) {
     else if(input$discipline == 8){
       df = geoe
       disc_name = "Geological Engineering"
+      dummy <- fix
     } 
     else if(input$discipline == 9){
       df = enph
       disc_name = "Engineering Physics"
-      dummy <- bind_rows(dummy_1, dummy_2, dummy_4) %>% mutate(plan = "ENPH")
+      dummy <- bind_rows(dummy_2) %>% mutate(plan = "ENPH")
     } 
     else if (input$discipline == 10){
       df = mthe
@@ -79,7 +84,7 @@ shinyServer(function(input, output) {
     n_4 <-  sum(with(df, year ==4 & score_total > 1), na.rm = TRUE)     
     year4 <- paste0("Fourth Year\nn = ", n_4, "   n = ", n_eng_4) #text string for xlabel
     
-    df <- rbind(all_eng, df, dummy) #combine selection with all eng to plot comparison
+    df <- rbind(all_eng, df, dummy, fix) #combine selection with all eng to plot comparison
     graph_title <- paste0(disc_name, " CLA Scores")
 
     
@@ -99,16 +104,16 @@ shinyServer(function(input, output) {
       scale_x_discrete(labels = c(year1, year2, year3, year4)) + #text strings from above with sample sizes
       theme(
         panel.border = element_rect(colour = "grey", fill = NA), #add border around graph
-        panel.grid.major.y = element_line("grey"), #change horizonatal line colour (from white)
         panel.background = element_rect("white"), #change background colour
-        #legend.position = "bottom", # position legend below graph
+        legend.key = element_blank(), # remove grey background from legend keys
         legend.title = element_blank(), #remove legend title
+        panel.grid = element_blank(), # remove lines within plot
         axis.title.x = element_blank(), # remove x axis title
         axis.text.x = element_text(size = 12), #size of x axis labels
         panel.grid.major.x = element_blank()
         ) +
       scale_fill_manual(
-        values =  c("purple", "gold"),
+        values =  c("darkgoldenrod1", "steelblue3"),
         labels = c(disc_name, "All Engineering")
         )+
       annotate( # add labels for CLA mastery levels
@@ -120,9 +125,6 @@ shinyServer(function(input, output) {
         label = c("Below Basic", "Basic", "Proficient", "Accomplished", "Advanced", "CLA Mastery Levels"), 
         colour = "red"
       ) # end ggplot description  
-
-
-
     
   }#end plot expression
   ) #end render plot

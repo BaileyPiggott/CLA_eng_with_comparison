@@ -11,8 +11,7 @@ shinyUI(fluidPage(
   
   sidebarPanel(
     selectInput("discipline", "Discipline:",
-                c("All Engineering" = 11,
-                  "Mechanical" = 1, 
+                c("Mechanical" = 1, 
                   "Electrical" = 2, 
                   "Computer" = 3,
                   "Civil" = 4,
@@ -21,8 +20,7 @@ shinyUI(fluidPage(
                   "Mining" = 7,
                   "Geological" = 8,
                   "Engineering Physics" = 9,
-                  "Engineering Math" = 10, 
-                  selected = 11 #default to all eng
+                  "Engineering Math" = 10
                 )#end options
     ),#end selectInput
     
